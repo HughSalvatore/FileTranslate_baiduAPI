@@ -1,0 +1,35 @@
+﻿
+AccountMSG.AccountLocked=该帐号已被锁定
+AccountMSG.AccountUsed=该帐号已登录
+AccountMSG.AddGroupExist=用户组名已存在
+AccountMSG.AddGroupSuccess=增加用户组成功
+AccountMSG.AddUserExist=用户名已存在
+AccountMSG.AddUserSuccess=增加用户成功
+AccountMSG.DeleteGroupSuccess=删除用户组成功
+AccountMSG.DeleteInuseGroup=该用户组中存在用户
+AccountMSG.DeleteUserSuccess=删除用户成功
+AccountMSG.EmptyAuthority=空权限列表
+AccountMSG.EmptyName=名称不能为空
+AccountMSG.ErrorName=用户名和组名不能包含 . [ ] % 不能以&开头，且不能为空！
+AccountMSG.Failed=操作失败
+AccountMSG.InvalidPassword=密码不正确, 提示:默认密码空
+AccountMSG.InvalidPasswordNoTip=密码不正确
+AccountMSG.ModGroupSuccess=修改用户组成功
+AccountMSG.ModPasswordSuccess=修改密码成功
+AccountMSG.ModUserSuccess=修改用户成功
+AccountMSG.NoAudio=此通道无音频
+AccountMSG.PasswordMismatch=密码不匹配
+AccountMSG.PlayDefaultError=默认回放路数不能多于最大回放路数！
+AccountMSG.SaveConfigFailed=保存配置信息失败
+AccountMSG.SelectUser=请选择用户！
+AccountMSG.SuperPasswordLogin=使用超级密码登录，所有用户密码自动恢复为默认
+AccountMSG.SureToDelete=确定要删除吗?
+AccountMSG.TooLargeAuthority=用户权限超出用户组的权限
+AccountMSG.TryDeleteResvUser=保留用戶不允许删除
+AccountMSG.TryModifyResvUser=保留用戶不允许修改
+
+
+
+
+
+
