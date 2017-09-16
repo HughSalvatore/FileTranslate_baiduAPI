@@ -18,7 +18,7 @@
 > key3=value3
 > 
 ## How to use
-	Run the script at the terminal，follow the prompts to enter the necessary parameters.For example:
+	Run the script at the terminal，follow the prompts to enter the necessary parameters.If you want to test this script, please put two files in the same directory to run.
 > 请输入文件格式:
 > 
 > 1) a:b 2) a=b
