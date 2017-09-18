@@ -21,6 +21,7 @@ def mulLangTranslate(query, fromlang, tolang):
     :param tolang: 目标语言类型
     :return: contantDict 以字典的形式返回翻译结果
     """
+    global contantDict
     salt = random.randint(32768, 65535)
     sign = appId + query + str(salt) + secretKey
     m = hashlib.md5(sign.encode("utf-8"))
@@ -47,20 +48,20 @@ def fileStrHandle(content, pattern):
     """
     if pattern == '1':  # 匹配形如"key:value"
         keypat = r'[a-zA-Z_][a-zA-Z0-9_]*:'
-        valuepat = r':[\S]+'
+        valuepat = r':.+'
     elif pattern == '2':  # 匹配形如"key=value"
-        keypat = r'[a-zA-Z_][a-zA-Z0-9_]*='
-        valuepat = r'=[\S]+'
+        keypat = r'.*='
+        valuepat = r'=.+'
     matchkeys = re.findall(keypat, content)
     matchvalues = re.findall(valuepat, content)
-    values = ''
-    for value in matchvalues:
+    print(len(matchkeys))
+    print(len(matchvalues))
+    for i in range(0, len(matchvalues)):
         if pattern == '1':
-            value = value.replace(':', '')
+            matchvalues[i] = matchvalues[i].replace(':', '')+'\n'
         elif pattern == '2':
-            value = value.replace('=', '')
-        values += value + '\n'
-    return matchkeys, values
+            matchvalues[i] = matchvalues[i].replace('=', '')+'\n'
+    return matchkeys, matchvalues
 
 
 # 语言翻译提示
@@ -93,11 +94,14 @@ class FileIO:
     """
     inputfilename = ''
     content = ''
+    partvalues = []
     keys = []
+    values = []
     query = ''
     fromLang = ''
     toLang = ''
     pattern = ''
+    lines = 0
 
     def __init__(self, infile, fromlang, tolang, ft):
         self.inputfilename = infile
@@ -108,14 +112,32 @@ class FileIO:
     def fileRead(self):
         with open(self.inputfilename, mode='r', encoding='utf-8') as f:
             self.content = f.read()
-        (self.keys, self.query) = fileStrHandle(self.content, self.pattern)
+        (self.keys, self.partvalues) = fileStrHandle(self.content, self.pattern)
 
     def fileWrite(self):
+        reslist = []
+        for i in range(1, len(self.partvalues)):
+            if i % 100 != 0:                              # 一次读取100行
+                self.query += self.partvalues[i-1]
+            else:
+                self.query += self.partvalues[i-1]
+                results = mulLangTranslate(self.query, self.fromLang, self.toLang)
+                if 'trans_result' in results:
+                    reslist = results['trans_result']
+                    self.values += reslist
+                    self.query = ''
+        self.query += self.partvalues[i]
         results = mulLangTranslate(self.query, self.fromLang, self.toLang)
-        reslist = results['trans_result']
+        if 'trans_result' in results:
+            reslist = results['trans_result']
+            self.values += reslist
+        print(len(self.values))
+        print(len(self.keys))
+
         with open(str(self.toLang)+".js", mode='a+', encoding='utf-8') as f:
-            for i in range(len(self.keys)):
-                f.writelines(self.keys[i]+reslist[i]['dst']+'\n')
+            for j in range(0, len(self.keys)):
+                print(j)
+                f.writelines(self.keys[j]+self.values[j]['dst']+'\n')
 
 
 if __name__ == '__main__':
